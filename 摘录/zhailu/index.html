@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="description" content="This is Vita`s Blog in GitHub">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    计算机网络摘录 |
+    
+    Vita&#39;s Blog</title>
+  
+  <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<script src="/js/pace.min.js"></script>
+
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Vita's Blog" type="application/atom+xml">
+</head>
+
+<body>
+  <main class="content">
+    <section class="outer">
+  <article id="post-zhailu" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+      
+
+<h1 class="article-title" itemprop="name">
+  计算机网络摘录
+</h1>
+
+
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/%E6%91%98%E5%BD%95/zhailu/" class="article-date">
+  <time datetime="2021-03-04T11:37:04.000Z" itemprop="datePublished">2021-03-04</time>
+</a>
+      
+<div class="article-category">
+  <a class="article-category-link" href="/categories/%E6%91%98%E5%BD%95/">摘录</a>
+</div>
+
+    </div>
+    
+
+    
+    
+<div class="tocbot"></div>
+
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+      
+      <h3 id="以下内容摘录自知乎一个很厉害的小姐姐对计算机网络的理解"><a href="#以下内容摘录自知乎一个很厉害的小姐姐对计算机网络的理解" class="headerlink" title="以下内容摘录自知乎一个很厉害的小姐姐对计算机网络的理解"></a>以下内容摘录自知乎一个很厉害的小姐姐对计算机网络的理解</h3><p>作者：@什么名字可以吸粉<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/19718686/answer/185348786">https://www.zhihu.com/question/19718686/answer/185348786</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>计网的目的是通信，是为了连接端到端<br><strong>所以我们首先要考虑——网怎么设计</strong></p>
+<p>我们有两种网：1.分组交换 ；2.电路交换（电话）</p>
+<p>在很久很久以前，你记不记着，有个“<strong>拨号连接</strong>”，有个叫做“猫”的东西？？？<br>没错，就是那个，一上网就打不了座机的时代<br>此时，我们还是<strong>电路交换</strong>哟</p>
+<p>这样太蠢了！！！<br>如果我只是想上网看下小电影的简介，那我打开介绍小电影的网站，就暂时不会再通信了<br>所以，没必要一直给我连接着啊！</p>
+<p>于是，我们用起了<strong>分组交换</strong><br>分组交换还有两种方式：<br>1.虚电路，如ATM（模拟电话线路）；2.<strong>数据报</strong>，如因特网</p>
+<p>&gt;为啥因特网不用虚电路？<br>肯定是因为，大多数时候，虚电路没必要啊，而且麻烦不好用啊</p>
+<p>&gt;为啥虚电路没必要&amp;不好用？<br>因为大多数时候，互联网没有实时要求啊，&amp;他的面向连接浪费资源啊</p>
+<p>好嘞，现在我们知道了，因特网使用的是，数据报<br>我们先不管数据报是什么，我们<strong>先考虑下如何传输数据报</strong></p>
+<p><strong>—————————————–</strong></p>
+<p>我们的因特网，肯定是基于物理电路的，<br>因此，我们需要一个，将数据转化为物理信号的层，<br>于是，<strong>物理层诞生啦</strong></p>
+<p><strong>—————————————-</strong></p>
+<p>有了处理物理信号的物理层，可我们还得知道，<strong>信号发给谁啊<br><strong>你肯定知道，每个主机都有一个，全球唯一的MAC地址吧<br>所以，我们可以用MAC地址来寻址啊<br>恭喜你，</strong>链路层诞生啦</strong></p>
+<p><strong>—————————————-</strong></p>
+<p>别急，你知道MAC地址，是扁平化的吧<br>也就是说，MAC地址的空间分布，是无规律的！！！<br>如果你有十万台主机，要通过MAC地址来寻址<br><strong>无F**K可说**，<br>不管你设计什么样的算法，数据量都太大了！！！<br>所以，</strong>我们需要IP地址啊<br><strong>&lt;PS,IP里的有趣的东西太多啦，所以我补充在了最后&gt;<br>有了IP地址，恭喜你，</strong>网络层诞生啦**</p>
+<p><strong>—————————————–</strong></p>
+<p>然而，一台主机不能只和一台服务器通信啊，<br>毕竟下小电影，也要同时货比三家啊<br>那如何实现<strong>并行通信</strong>呢？<br>嘿嘿，我们有端口号啊</p>
+<p>再基于不同需求：<br>有人想要连得快，不介意数据丢失，比如你的小电影<br>有人必须要数据可靠，比如发一个电子邮件<br>于是产生了UDP&amp;TCP<br>恭喜你，<strong>运输层诞生啦</strong></p>
+<p><strong>—————————————–</strong></p>
+<p>别急，你知道的吧，不同应用，有不同的传输需求<br>比如，请求网页，发送邮件，P2P…<br>而且，还有DHCP服务器啊<br>为了方便开发者，我们就对这些<strong>常用需求</strong>，进行了封装<br>恭喜你，<strong>应用层诞生啦</strong></p>
+<p>至此，自底向上，讲述了计网。<br>待我考完试，我可以写一部，<strong>计算机网络·从下向顶方法</strong><br>（斜眼笑</p>
+<p>====================</p>
+<p><strong>&lt;细节补充&gt;</strong><br>&gt;来我们思考先一个问题：如果有四台电脑，要互相能通信，咋办？</p>
+<p>&gt;每一台电脑都和另外三台连起来？<br>那我要是再来十台电脑，你在电脑上给我再加十个接口？</p>
+<p>&gt;那，把他们连接到一个小盒子上，让小盒子帮着通信？<br>哎这个可以有啊，那如果我有一万台电脑，一个小盒子能够用？</p>
+<p>&gt;嘿嘿，那让每一个小盒子连一百台，然后把一百台小盒子再连给一个小盒子</p>
+<p>-———————————————-</p>
+<p>我们可以用“电话线，宽带，和光纤”，把电脑接给小盒子，它们被称作“<strong>接入网</strong>”<br>而<strong>ISP</strong>就像小盒子，帮你在网络里做通信<br>而ISP的分层，无非就是，终端太多了，没办法不分层</p>
+<p>好了，现在你已经明白了网络的<strong>层次化</strong></p>
+<p>你肯定是知道，<br>为了在辣么多计算机里，找到目标，我们采用了，有规律的IP地址<br>而路由器，又叫<strong>分组交换机</strong>，就是帮我们在公网里，做IP寻址的</p>
+<p>最初，IP地址是<strong>IPv4</strong><br>首先，IP地址是分成了五类（ABCDE）</p>
+<p>奈何不够用啊，于是，我们是使用了<strong>子网划分</strong><br>然鹅，手动分配子网IP，会死人的！<br>于是，<strong>DHCP</strong>来了（斜眼笑</p>
+<p>md还是不好用啊，于是，诞生了无分类编址（<strong>CIDR</strong>）<br>奈何，还是不够用啊<br>于是，<strong>NAT</strong>出现啦，于是专用网的IP不再占用公网IP</p>
+<p>-————————————–</p>
+<p>&gt;首先，啥是<strong>专用网</strong>啊<br>1.局域网，比如，公用一个路由器的宿舍啊，家啊<br>2.部分广域网，比如军队、铁路、交通、电力等部门，拥有自己专用的通信网和计算机网。然鹅，这些网络不对内部外的用户开放。这些网络覆盖的地理范围很广，因此，这些专用网都是广域网。</p>
+<p>保密性质的广域网，通信要扯到VPN，宝宝没学到这里，先埋个坑</p>
+<p>-————————————–</p>
+<p>来我们先谈谈<strong>局域网内的通信</strong>：<br>如果哈，我们是一个大局域网，比如我们公司有一百台电脑，<br>首先，路由器没一百个接口让我插！<br>其次，如果我不想和公网通信，那我就没必要用路由器！<br>所以，<strong>链路交换机</strong>来了！！！</p>
+<p>链路交换机是基于MAC寻址的，因为局域网没大到必须用IP寻址的地步啊<br>但更准确的说话，链路交换机采用了，跨越链路层和网络层边界的协议——<strong>ARP</strong><br>毕竟，ARP要做一个IP到MAC的映射，</p>
+<p>-—————————————-</p>
+<p>&gt;你问我，为啥ARP要做IP到MAC的映射<br>因为，你在应用层和运输层里，目的地址都写得是IP,<br>不把IP转化为MAC，咋寻址啊？</p>
+<p>&gt;你问我，局域网为啥不用路由器，为啥要用链路交换机<br>交换机功能少，接口多，比路由器划算啊</p>
+<p>&gt;那，局域网和公网怎么通信呢?<br>所以，<strong>NAT来了啊</strong>！！！</p>
+<p>分组交换机，也就是路由器，用自己的公网IP，帮你们局域网里的人们，给公网发信息<br>然后把接受到的信息，再转发给，那个找他帮忙的人<br>这就是NAT技术啊混蛋！！！</p>
+<p>-——————————————</p>
+<p>这时一群人说，NAT bulabula不好，我们要拒绝NAT,使用<strong>IPv6</strong><br>那么就牵扯到了<strong>IPv4和IPv6间</strong>的通信（双栈||隧道）</p>
+<p>还有啊，IP地址太丑啦，用户根本记不住 <a href="https://link.zhihu.com/?target=http://xxx.xxx.xxx.xxx">http://xxx.xxx.xxx.xxx</a><br>于是乎，<strong>域名</strong>千呼万唤始出来<br>顺便带出来了DNS服务器</p>
+<p>================</p>
+<p>哎，好多有趣的还没讲完，像什么路由算法啊，校验方式啊，寻找DNS服务器和网关地址啊<br><strong>网络的网络，因吹斯汀~</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://fencingman.github.io/%E6%91%98%E5%BD%95/zhailu/" data-id="ckluu90760002ecvk8oz3an1c" class="article-share-link">
+        分享
+      </a>
+      
+<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a></li></ul>
+
+    </footer>
+
+  </div>
+
+  
+  
+  
+
+  
+  
+  
+  
+
+</article>
+</section>
+    <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+  <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+  <li><i class="fe fe-bookmark"></i> <span id="busuanzi_value_page_pv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>Vita&#39;s Blog &copy; 2021</li>
+      
+        <li>京ICP备17054916号-2</li>
+      
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>theme  <a target="_blank" rel="noopener" href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+  </main>
+  <aside class="sidebar">
+    <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/images/hexo.svg" alt="Vita&#39;s Blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/gallery">相册</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">关于</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="搜索">
+        <i class="fe fe-search"></i>
+        搜索
+      </a>
+    </li>
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="fe fe-feed"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+  </aside>
+  
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/copybtn.js"></script>
+
+
+
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  // Tocbot_v4.7.0  http://tscanlin.github.io/tocbot/
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto',
+  });
+</script>
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Vita&#39;s Blog</title>
+  
+  <subtitle>谨言慎行</subtitle>
+  <link href="https://fencingman.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://fencingman.github.io/"/>
+  <updated>2021-03-04T12:03:03.069Z</updated>
+  <id>https://fencingman.github.io/</id>
+  
+  <author>
+    <name>yang xiao</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>计算机网络摘录</title>
+    <link href="https://fencingman.github.io/%E6%91%98%E5%BD%95/zhailu/"/>
+    <id>https://fencingman.github.io/%E6%91%98%E5%BD%95/zhailu/</id>
+    <published>2021-03-04T11:37:04.000Z</published>
+    <updated>2021-03-04T12:03:03.069Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;以下内容摘录自知乎一个很厉害的小姐姐对计算机网络的理解&quot;&gt;&lt;a href=&quot;#以下内容摘录自知乎一个很厉害的小姐姐对计算机网络的理解&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="摘录" scheme="https://fencingman.github.io/categories/%E6%91%98%E5%BD%95/"/>
+    
+    
+    <category term="计算机网络" scheme="https://fencingman.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+</feed>

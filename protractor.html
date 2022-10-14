@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>量角器读数</title>
+  <style>
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      display: flex;
+    }
+    .container {
+      text-align: center;
+      margin: auto;
+    }
+    .angle {
+      font-size: 2rem;
+    }
+    .angle.negative {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .angle::after {
+      content: attr(data-angle);
+    }
+    .protractor {
+      width: 80%;
+    }
+    .line {
+      width: 42%;
+      height: 1px;
+      z-index: 3;
+      position: relative;
+      top: -5px;
+      left: 8%;
+      background-color: red;
+      transform: rotate(var(--angle));
+      transform-origin: right;
+    }
+	.baseline {
+      width: 42%;
+      height: 1px;
+      z-index: 2;
+      position: relative;
+      top: -6px;
+      left: 8%;
+      background-color: red;
+      transform: rotate(var(--angle));
+      transform-origin: right;
+    }
+    .btn-group {
+      margin: 1rem 0;
+    }
+    .opacity-0 {
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="angle"></div>
+    <div class="angle negative"></div>
+    <img class="protractor" src="protractor.webp" alt="量角器">
+    <div class="line"></div>
+    <div class="baseline"></div>
+    <div class="btn-group">
+      <button onclick="showAngle()">显示结果</button>
+      <button onclick="setRandomAngle()">下一题</button>
+    </div>
+  </div>
+  <script>
+    function setRandomAngle() {
+      const randomAngle = Math.ceil(Math.random()*179)
+      const randomBaseLine = Math.ceil(Math.random()*10) < 8 ? true : false;
+	  if(randomBaseLine){
+		document.querySelector('.baseline').style.setProperty('--angle', `deg`)
+	  }else{
+		document.querySelector('.baseline').style.setProperty('--angle', `180deg`)		
+	  }
+      document.querySelectorAll('.angle').forEach((el) => { el.classList.add('opacity-0')})
+	  
+	  
+	  if(randomBaseLine){
+		document.querySelector('.angle').setAttribute('data-angle', `${randomAngle}°`)
+	  }else{
+		document.querySelector('.angle').setAttribute('data-angle', `${180 - randomAngle}°`)		
+	  }
+      document.querySelector('.line').style.setProperty('--angle', `${randomAngle}deg`)
+    }
+    function showAngle() {
+      document.querySelectorAll('.angle').forEach((el) => { el.classList.remove('opacity-0')})
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setRandomAngle()
+    });
+  </script>
+</body>
+</html>

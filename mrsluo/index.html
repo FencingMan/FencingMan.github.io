@@ -416,8 +416,11 @@
             default:
                 alert("unknown type=" + type);
         }
-
+        sleep(rand(1,10))
         return issue;
+    }
+    function sleep(sleepTime) {
+        for(var start = new Date; new Date - start <= sleepTime;) {}
     }
 
     /* genrate n issues of given type */

@@ -1,83 +1,15 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="js/layui/css/layui.css" media="all">
+    <script src="js/layui/layui.js" charset="utf-8"></script>
+    <script src="js/calculation.js" charset="utf-8"></script>
+    <script src="js/html-docx.js" charset="utf-8"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
     <style>
-        body, h2 {
-            margin: 0;
-        }
-
-        body, input, select {
-            font-size: 14px;
-            font-family: "宋体", tahoma, arial;
-        }
-
-        h2 {
-            width: 750px;
-            height: 50px;
-            margin: 0 0;
-            color: red;
-            border: 1px solid gray;
-        }
-
-        h2 span {
-            width: 374px;
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            float: left;
-        }
-
-        ul li.colmode {
-            float: left;
-            width: 200px;
-            font-size: 14px;
-            margin: 0 0;
-            padding: 0;
-            height: 20px;
-            list-style-type: none;
-        }
-
-        ul li {
-            float: left;
-            width: 150px;
-            font-size: 14px;
-            margin: 0 0;
-            padding: 0;
-            height: 20px;
-            list-style-type: none;
-        }
-
-        #tab .tab {
-            color: yellow;
-            background-color: #999;
-        }
-
-        #ct div {
-            width: 750px;
-            height: 120px;
-            margin: 0 0;
-            border: 1px solid blue;
-            display: none;
-        }
-
-        #ct .ct {
-            display: block;
-            float: center;
-        }
-
-        #act div {
-            width: 750px;
-            height: 30px;
-            margin: 0 0;
-            border: 1px solid blue;
-            display: none;
-        }
-
-        #act .act {
-            display: block;
-            float: center;
-        }
-
         table {
             table-layout: fixed;
             empty-cells: show;
@@ -107,48 +39,99 @@
     </style>
 </head>
 <body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>练习题生成器</legend>
+</fieldset>
 
-<center><h2 id="tab">
-    <span class="tab">按列选模式生成</span>
-    <span>按模式数量混合生成</span>
-</h2></center>
+<ul class="layui-nav" lay-filter="demo">
+    <li class="layui-nav-item layui-this">
+        <a href="javascript:;">混合</a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:;">列选</a>
+    </li>
+</ul>
+<form class="layui-form" action="" id="mix" style="margin-top: 20px;">
+    <div class="layui-form-item"></div>
+</form>
+<form class="layui-form" id="liexuan" action="" style="margin-top: 20px;display: none">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">第一列</label>
+            <div class="layui-input-inline">
+                <select id="col1type" lay-verify="required" lay-search="">
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">第二列</label>
+            <div class="layui-input-inline">
+                <select id="col2type" lay-verify="required" lay-search="">
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">第三列</label>
+            <div class="layui-input-inline">
+                <select id="col3type" lay-verify="required" lay-search="">
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">第四列</label>
+            <div class="layui-input-inline">
+                <select id="col4type" lay-verify="required" lay-search="">
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">第五列</label>
+            <div class="layui-input-inline">
+                <select id="col5type" lay-verify="required" lay-search="">
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
+<form class="layui-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">份数：</label>
+        <div class="layui-input-inline" style="width: 50px">
+            <select id="pages" lay-verify="required">
+            </select>
+        </div>
 
-<div id="ct" align="center">
-    <div class="ct">
-        <ul>
-            <li class="colmode">
-                第1列: <select id="col1type">
-            </select>
-            </li>
-            <li class="colmode">
-                第2列: <select id="col2type">
-            </select>
-            </li>
-            <li class="colmode">
-                第3列: <select id="col3type">
-            </select>
-            </li>
-            <li class="colmode">
-                第4列: <select id="col4type">
-            </select>
-            </li>
-            <li class="colmode">
-                第5列: <select id="col5type">
-            </select>
-            </li>
-        </ul>
+        <label class="layui-form-label">题数：</label>
+        <div class="layui-input-inline" style="width: 50px">
+            <input class="layui-input" id="size" value="20" lay-verify="required"/>
+        </div>
+        <label class="layui-form-label">答案：</label>
+        <div class="layui-input-inline">
+            <input type="checkbox" name="close" lay-skin="switch" lay-filter="answerSwitch" lay-text="显示|隐藏" />
+        </div>
+        <label class="layui-form-label">起始日期：</label>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" readonly id="dateSelect" placeholder="点击选择日期"/>
+        </div>
     </div>
-    <div>
-        <ul id="mode_option_list"></ul>
-    </div>
+</form>
+<div class="layui-form-item">
+    <label class="layui-form-label">
+        <button class="layui-btn" lay-filter="*" onclick="generate()">立即生成</button>
+    </label>
+    <label class="layui-form-label">
+        <button class="layui-btn  layui-btn-primary  layui-border-green" lay-filter="*" onclick="saveasword()">
+            保存word
+        </button>
+    </label></label>
 </div>
-<div id="act" align="center">
+<div id="act" align="center" style="display: none">
     <div class="act" align="center">
         <input type="button" value="重新生成" onclick="generate()"/>
-        <input type="text" value="1" id="pages" size="2"/>份&nbsp;
-        每份：<input type="text" value="20" id="size" size="2"/>题
+        <input type="text" value="1" id="pages1" size="2"/>份&nbsp;
+        每份：<input type="text" value="20" id="size1" size="2"/>题
         &nbsp;起始日期：
-        <input type="text" id="dateSelect" placeholder="点击选择日期"/>
+        <input type="text" id="dateSelect1" placeholder="点击选择日期"/>
         <input type="button" value="打印" onclick="printme()"/>
         <input type="button" value="保存word" onclick="saveasword()"/>
         <!---
@@ -172,261 +155,28 @@
 
 
 <script type="text/javascript">
-    var startDate = new Date();
-    //执行一个laydate实例
-    laydate.render({
-        elem: '#dateSelect'
-        , value: new Date()
-        , done: function (value, date, endDate) {
-            startDate = new Date(value);
-        }
-    });
-
     /* Generate integer that in [m,n], if m > n return 0 */
     function rand(m, n) {
         if (m > n)
             return 0;
-        else
-            return Math.round(Math.random() * (n - m) + m);
-    }
+        else {
+            let randNum = Math.round(Math.random() * (n - m) + m);
+            if (randNum == 1) {
+                randNum = Math.round(Math.random() * (n - m) + m);
+            }
+            return randNum;
 
-    var modes = [
-        ["addc_2_2", "两位数进位加法", 1],
-        ["add_2_2", "两位数不进位加", 1],
-        ["subc_2_2", "两位数退位减法", 1],
-        ["sub_2_2", "两位数不退位减", 1],
-        ["add_1_2", "一位数加两位数", 0],
-        ["add_2_1", "两位数加一位数", 0],
-        ["sub_2_1", "两位数减一位数", 2],
-        ["mul_1_1", "一位数乘一位数", 4],
-        ["addmul_2_1_1", "两位数加一位数乘", 2],
-        ["muladd_1_1_2", "一位数乘加两位数", 1],
-        ["mulsub_1_1_2", "一位数乘减两位数", 2],
-        ["submul_2_1_1", "两位数减一位数乘", 1],
-        ["sub9", "减数个位为9", 0],
-        ["sub012", "减数个位为012", 0],
-        ["add012", "加数个位为012", 0],
-        ["addn_2_2", "特殊非进位加", 0],
-        ["addmul_1_1_1", "一位数加一位数乘", 1],
-        ["div_99cfb", "99乘法表除", 3],
-    ];
-
-
-    /* randomly generate one issue of give type */
-    function generate_issue(type) {
-        var i, j;
-
-        var issue = new Object();
-
-        // default 1 operator
-        issue.op_n = 1;
-        issue.op = new Array();
-        issue.opr = new Array();
-
-        switch (type) {
-            case 'add_1_1':
-                i = rand(1, 9);
-                j = rand(1, 9);
-                issue.opr[0] = i;
-                issue.op[0] = '+';
-                issue.opr[1] = j;
-                issue.result = issue.opr[0] + issue.opr[1];
-                break;
-            case 'addc_2_2':
-                i = rand(1, 7);
-                j = rand(1, 9);
-                issue.opr[0] = i * 10 + j;
-                issue.op[0] = '+';
-                issue.opr[1] = rand(1, 8 - i) * 10 + rand(10 - j, 9);
-                issue.result = issue.opr[0] + issue.opr[1];
-                break;
-            case 'add_2_2':
-                i = rand(1, 8);
-                j = rand(0, 9);
-                issue.opr[0] = i * 10 + j;
-                issue.op[0] = '+';
-                issue.opr[1] = rand(1, 9 - i) * 10 + rand(0, 9 - j);
-                issue.result = issue.opr[0] + issue.opr[1];
-                break;
-            case 'subc_2_2':
-                i = rand(2, 9);
-                j = rand(0, 8);
-                issue.opr[0] = i * 10 + j;
-                issue.op[0] = '-';
-                issue.opr[1] = rand(1, i - 1) * 10 + rand(j + 1, 9);
-                issue.result = issue.opr[0] - issue.opr[1];
-                break;
-            case 'sub_2_2':
-                i = rand(1, 9);
-                j = rand(0, 9);
-                issue.opr[0] = i * 10 + j;
-                issue.op[0] = '-';
-                issue.opr[1] = rand(1, i) * 10 + rand(0, j);
-                issue.result = issue.opr[0] - issue.opr[1];
-                break;
-            case 'add_2_1':
-                i = rand(1, 9);
-                j = rand(0, 9);
-                issue.opr[0] = i * 10 + j;
-                issue.op[0] = '+';
-                issue.opr[1] = (i < 9) ? rand(0, 9) : rand(0, 9 - j);
-                issue.result = issue.opr[0] + issue.opr[1];
-                break;
-            case 'add_1_2':
-                i = rand(1, 9);
-                j = rand(1, 9);
-                issue.opr[0] = i;
-                issue.op[0] = '+';
-                issue.opr[1] = (j == 9) ? j * 10 + rand(0, 9 - i) : j * 10 + rand(0, 9);
-                issue.result = issue.opr[0] + issue.opr[1];
-                break;
-            case 'sub_2_1':
-                i = rand(1, 9);
-                j = rand(0, 9);
-                issue.opr[0] = i * 10 + j;
-                issue.op[0] = '-';
-                issue.opr[1] = rand(0, 9);
-                issue.result = issue.opr[0] - issue.opr[1];
-                break;
-            case 'mul_1_1':
-                i = rand(1, 9);
-                j = rand(1, 9);
-                issue.opr[0] = i;
-                issue.op[0] = '×';
-                issue.opr[1] = j;
-                issue.result = issue.opr[0] * issue.opr[1];
-                break;
-            case 'addmul_2_1_1':
-                i = rand(1, 99);
-                j = rand(1, 9);
-                k = rand(1, 9);
-                issue.op_n = 2;
-                issue.opr[0] = i;
-                issue.op[0] = '+';
-                issue.opr[1] = j;
-                issue.op[1] = '×';
-                issue.opr[2] = k;
-                issue.result = issue.opr[0] + issue.opr[1] * issue.opr[2];
-                break;
-            case 'addmul_1_1_1':
-                i = rand(1, 9);
-                j = rand(1, 9);
-                k = rand(1, 9);
-                issue.op_n = 2;
-                issue.opr[0] = i;
-                issue.op[0] = '+';
-                issue.opr[1] = j;
-                issue.op[1] = '×';
-                issue.opr[2] = k;
-                issue.result = issue.opr[0] + issue.opr[1] * issue.opr[2];
-                break;
-            case 'submul_2_1_1':
-                j = rand(1, 9);
-                k = rand(1, 9);
-                i = rand(j * k, 100);
-                issue.op_n = 2;
-                issue.opr[0] = i;
-                issue.op[0] = '-';
-                issue.opr[1] = j;
-                issue.op[1] = '×';
-                issue.opr[2] = k;
-                issue.result = issue.opr[0] - issue.opr[1] * issue.opr[2];
-                break;
-            case 'muladd_1_1_2':
-                i = rand(1, 9);
-                j = rand(1, 9);
-                k = rand(1, 99);
-                issue.op_n = 2;
-                issue.opr[0] = i;
-                issue.op[0] = '×';
-                issue.opr[1] = j;
-                issue.op[1] = '+';
-                issue.opr[2] = k;
-                issue.result = issue.opr[0] * issue.opr[1] + issue.opr[2];
-                break;
-            case 'mulsub_1_1_2':
-                i = rand(4, 9);
-                j = rand(4, 9);
-                k = rand(1, i * j);
-                issue.op_n = 2;
-                issue.opr[0] = i;
-                issue.op[0] = '×';
-                issue.opr[1] = j;
-                issue.op[1] = '-';
-                issue.opr[2] = k;
-                issue.result = issue.opr[0] * issue.opr[1] - issue.opr[2];
-                break;
-            case 'sub9':
-                j = rand(1, 8);
-                i = rand(j + 1, 9);
-                issue.opr[0] = i * 10 + rand(0, 9);
-                issue.op[0] = '-';
-                issue.opr[1] = j * 10 + 9;
-                issue.result = issue.opr[0] - issue.opr[1];
-                break;
-            case 'sub012':
-                i = rand(2, 9);
-                j = rand(0, 2);
-                issue.opr[0] = i * 10 + rand(5, 9);
-                issue.op[0] = '-';
-                issue.opr[1] = rand(0, i - 1) * 10 + j;
-                issue.result = issue.opr[0] - issue.opr[1];
-                break;
-            case 'add012':
-                i = rand(1, 8);
-                j = rand(1, 9 - i);
-                k = rand(0, 2);
-                issue.opr[0] = i * 10 + rand(0, 9 - k);
-                issue.op[0] = '+';
-                issue.opr[1] = j * 10 + k;
-                issue.result = issue.opr[0] + issue.opr[1];
-                break;
-            case 'mix_2_1':
-                i = rand(0, 4) * 2;
-                j = (i + 10) / 2;
-                issue.opr[0] = j * 10 + i;
-                issue.op[0] = '+';
-                issue.opr[1] = rand(1, (9 - j)) * 10 + j;
-                issue.result = issue.opr[0] + issue.opr[1];
-                break;
-            case 'addn_2_2':
-                /* add with no carry but at least a[2] + b[1] >= 10
-                   or a[1] + b[2] >= 10 to test whether it will confuse her*/
-                do {
-                    i = rand(1, 8);
-                    j = rand(0, 9);
-                    k = rand(0, 9 - j);
-                    l = rand(1, 9 - i);
-                } while (i + k < 10 && j + l < 10);
-                issue.opr[0] = i * 10 + j;
-                issue.op[0] = '+';
-                issue.opr[1] = l * 10 + k;
-                issue.result = issue.opr[0] + issue.opr[1];
-                break;
-            case "div_99cfb":
-                i = rand(1, 9);
-                j = rand(1, 9);
-                k = i*j;
-                issue.opr[0] = k;
-                issue.op[0] = '÷';
-                issue.opr[1] = j;
-                issue.result =i;
-                break;
-
-            default:
-                alert("unknown type=" + type);
         }
-        sleep(rand(1,10))
-        return issue;
     }
-    function sleep(sleepTime) {
-        for(var start = new Date; new Date - start <= sleepTime;) {}
-    }
+
 
     /* genrate n issues of given type */
     function generate_issues(type, n) {
-        var issues = new Array(n);
-
+        const issues = new Array(n);
+        const issuesSet = issuesMap.get(type);
+        if (issuesSet === undefined) {
+            issuesMap.set(type, new Set());
+        }
         for (var i = 0; i < n; i++)
             issues[i] = generate_issue(type);
 
@@ -453,7 +203,7 @@
        0: specify type for each column
        1: specify quantity of each type then mix
     */
-    var current_mode = 0;
+    var current_mode = 1;
     /* how many page generated, user can choose between 1-MAX_PAGES */
     var old_total_pages = 0;
     var total_pages = 0;
@@ -474,7 +224,7 @@
         return s;
     }
 
-    function create_table(p,start) {
+    function create_table(p, start) {
         var tab;
 
         tab = document.createElement("table");
@@ -493,7 +243,7 @@
                            <td></td> \
                            <td></td> </tr>';
                 start.setDate(day + 1);
-            }else {
+            } else {
                 for (var c = 0; c < 5; c++) {
                     tr.insertCell(c);
                 }
@@ -510,7 +260,7 @@
         var p, r, c;
         var tab, tr, td;
 
-        var show_answer = document.getElementById("show_answer_cb").checked;
+        var show_answer = document.querySelector("input[name='close']").checked
 
         var tempDate = new Date(startDate.getTime());
         for (p = 0; p < total_pages; p++) {
@@ -519,7 +269,7 @@
                 document.getElementById("tabdiv").removeChild(tab);
             }
 
-            tab = create_table(p,tempDate);
+            tab = create_table(p, tempDate);
 
             for (r = 0; r < CELLS_PER_PAGE() / 5; r++) {
                 tr = tab.rows[r + 1];
@@ -561,7 +311,11 @@
         show_issues();
     }
 
+    let issuesMap;
+
     function generate_mode2() {
+        //初始化题目Map(去重)
+        issuesMap = new Map();
         var i, j, k, p;
         var mode;
         var input;
@@ -572,18 +326,18 @@
         var total = 0;
 
         for (i = 0; i < modes.length; i++) {
-            input = document.getElementById(modes[i][0]);
+            input = document.querySelector('select[name="' + modes[i][0] + '"]');
             var inputValue = input.value;
             if (inputValue == '') {
                 n[i] = 0;
-            }else {
+            } else {
                 n[i] = parseInt(inputValue);
             }
             total += n[i];
         }
 
         if (total != CELLS_PER_PAGE()) {
-            alert("总题数应该是" + CELLS_PER_PAGE() + "，现在是" + total);
+            layer.msg("总题数应该是" + CELLS_PER_PAGE() + "，现在是" + total);
             return;
         }
 
@@ -628,55 +382,6 @@
 
     }
 
-    function changetab() {
-        var tabs = document.getElementById("tab").getElementsByTagName("span");
-        for (i = 0; i < tabs.length; i++) {
-            tabs[i].onclick = tab;
-        }
-    }
-
-    function tab() {
-        var tabs = document.getElementById("tab").getElementsByTagName("span");
-        var cts = document.getElementById("ct").getElementsByTagName("div");
-        for (i = 0; i < tabs.length; i++) {
-            tabs[i].className = "";
-            cts[i].className = "";
-            if (tabs[i] == this) {
-                tabs[i].className = "tab";
-                cts[i].className = "ct";
-                current_mode = i;
-            }
-        }
-    }
-
-    /* fill in the mode lists */
-    function create_options() {
-        var i, j;
-        var select, select_html;
-
-        var list, li;
-
-        for (i = 1; i < 6; i++) {
-            select = document.getElementById("col" + i + "type");
-            for (j = 0; j < modes.length; j++)
-                select.options.add(new Option(modes[j][1], modes[j][0]));
-        }
-
-        list = document.getElementById("mode_option_list");
-        for (i = 0; i < modes.length; i++) {
-            li = document.createElement("li");
-            li.innerHTML = '<li class="mixmode">' + modes[i][1] + '<input id="' +
-                modes[i][0] + '" type="text" value="' + modes[i][2] + '" size="2"/> </li>';
-            list.appendChild(li);
-        }
-    }
-
-    window.onload = function () {
-        changetab();
-        create_options();
-        generate();
-    }
-
     function printme() {
         $("#tabdiv").print();
     }
@@ -694,6 +399,32 @@
         $("table").tableExport({type: 'pdf', fileName: 'issues', pdfmake: {enabled: true}});
     }
 
+</script>
+
+<script id="liexuanTpl" type="text/html">
+    {{#  layui.each(d, function(index, item){ }}
+    <option value="{{ item[0] }}">{{ item[1] }}</option>
+    {{#  }); }}
+    {{#  if(d.length === 0){ }}
+    无数据
+    {{#  } }}
+</script>
+<script id="mixTpl" type="text/html">
+    {{#  layui.each(d, function(index, item){ }}
+    <div class="layui-inline">
+        <label class="layui-form-label" style="width:120px">{{ item[1] }}</label>
+        <div class="layui-input-inline" style="width:50px">
+            <select name="{{ item[0] }}" lay-verify="required">
+                <option value="0" {{# if(item[2]=== 0){ }} selected {{# } }}>0</option>
+                <option value="1" {{# if(item[2]=== 1){ }} selected {{# } }}>1</option>
+                <option value="2" {{# if(item[2]=== 2){ }} selected {{# } }}>2</option>
+                <option value="3" {{# if(item[2]=== 3){ }} selected {{# } }}>3</option>
+                <option value="4" {{# if(item[2]=== 4){ }} selected {{# } }}>4</option>
+                <option value="5" {{# if(item[2]=== 5){ }} selected {{# } }}>5</option>
+            </select>
+        </div>
+    </div>
+    {{#  }); }}
 </script>
 </body>
 </html>

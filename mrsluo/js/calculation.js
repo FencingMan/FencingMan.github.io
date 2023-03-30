@@ -25,7 +25,7 @@ var modes = [
     ["99cfb_div_div_1", "表内除法除以一位数", 0],
     ["1_mul_1_div_1", "一位数相乘除以一位数", 0],
     ["2_sub_99cfb_div", "两位数减表内除法", 0],
-    ["(2_sub_2)mul_1", "（两位数相减）乘以一位数", 0],
+    ["(2_sub_2)mul_1", "（两位数相减>3）乘以一位数", 0],
 ];
 
 layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function(){
@@ -96,7 +96,7 @@ layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function(){
 
 /* randomly generate one issue of give type */
 function generate_issue(type) {
-    var i, j;
+    let i, j, k, l, m;
 
     var issue = new Object();
 
@@ -312,6 +312,101 @@ function generate_issue(type) {
                 issue.op[1]  = '÷';
                 issue.opr[2] = j;
                 issue.result = i;
+                break;
+            case "2_sub_2_add_2":
+                do{
+                    i = rand(10, 99);
+                    j = rand(10, 99);
+                    k = i - j;
+                    l = rand(10,99);
+                    m = k + l;
+                }while (k <= 0 || m > 100)
+                issue.op_n = 2;
+                issue.opr[0] = i;
+                issue.op[0]  = '-';
+                issue.opr[1] = j
+                issue.op[1]  = '+';
+                issue.opr[2] = l;
+                issue.result = m;
+                break;
+            //表内除法乘以一位数
+            case "99cfb_div_mul_1":
+                i = rand(1, 9);
+                j = rand(1, 9);
+                k = i * j;
+                l = rand(1,9);
+                issue.op_n = 2;
+                issue.opr[0] = k;
+                issue.op[0]  = '÷';
+                issue.opr[1] = j
+                issue.op[1]  = '×';
+                issue.opr[2] = l;
+                issue.result = i*l;
+                break;
+            //表内除法除以一位数
+            case "99cfb_div_div_1":
+                do {
+                    i = rand(1, 9);
+                    j = rand(1, 9);
+                    k = i * j;
+                    l = rand(1,9);
+                }while (i % l !=0)
+                issue.op_n = 2;
+                issue.opr[0] = k;
+                issue.op[0]  = '÷';
+                issue.opr[1] = j
+                issue.op[1]  = '÷';
+                issue.opr[2] = l;
+                issue.result = i/l;
+                break;
+            //一位数相乘除以一位数
+            case "1_mul_1_div_1":
+                do {
+                    i = rand(1, 9);
+                    j = rand(1, 9);
+                    k = i * j;
+                    l = rand(1,9);
+                    m = k /l;
+                }while (k % l !=0 || l == i || l == j || m >= 10)
+                issue.op_n = 2;
+                issue.opr[0] = i;
+                issue.op[0]  = '×';
+                issue.opr[1] = j
+                issue.op[1]  = '÷';
+                issue.opr[2] = l;
+                issue.result = k/l;
+                break;
+            //两位数减表内除法
+            case "2_sub_99cfb_div":
+                i = rand(1, 9);
+                j = rand(1, 9);
+                k = i * j;
+                l = rand(10,99);
+                m = l - i;
+                issue.op_n = 2;
+                issue.opr[0] = l;
+                issue.op[0]  = '-';
+                issue.opr[1] = k
+                issue.op[1]  = '÷';
+                issue.opr[2] = j;
+                issue.result = m;
+                break;
+            //（两位数相减>3）乘以一位数
+            case "(2_sub_2)mul_1":
+                do {
+                    i = rand(10, 99);
+                    j = rand(10, 99);
+                    k = j - i;
+                    l = rand(1,9);
+                    m = k * l;
+                }while (k < 3 || k > 9)
+                issue.op_n = 2;
+                issue.opr[0] = '('+j;
+                issue.op[0]  = '-';
+                issue.opr[1] = i+')'
+                issue.op[1]  = '×';
+                issue.opr[2] = l;
+                issue.result = m;
                 break;
 
 

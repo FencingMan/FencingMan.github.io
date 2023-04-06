@@ -184,16 +184,20 @@ function generate_issue(type) {
                 issue.result = issue.opr[0] * issue.opr[1];
                 break;
             case 'addmul_2_1_1':
-                i = rand(1, 99);
-                j = rand(1, 9);
-                k = rand(1, 9);
+                do {
+                    i = rand(1, 99);
+                    j = rand(1, 9);
+                    k = rand(1, 9);
+                    l = j * k;
+                    m = l + i
+                }while (m > 99)
                 issue.op_n = 2;
                 issue.opr[0] = i;
                 issue.op[0] = '+';
                 issue.opr[1] = j;
                 issue.op[1] = '×';
                 issue.opr[2] = k;
-                issue.result = issue.opr[0] + issue.opr[1] * issue.opr[2];
+                issue.result = m;
                 break;
             case 'addmul_1_1_1':
                 i = rand(1, 9);
@@ -220,16 +224,20 @@ function generate_issue(type) {
                 issue.result = issue.opr[0] - issue.opr[1] * issue.opr[2];
                 break;
             case 'muladd_1_1_2':
-                i = rand(1, 9);
-                j = rand(1, 9);
-                k = rand(1, 99);
+                do {
+                    i = rand(1, 99);
+                    j = rand(1, 9);
+                    k = rand(1, 9);
+                    l = j * k;
+                    m = l + i
+                }while (m > 99)
                 issue.op_n = 2;
-                issue.opr[0] = i;
+                issue.opr[0] = j;
                 issue.op[0] = '×';
-                issue.opr[1] = j;
+                issue.opr[1] = k;
                 issue.op[1] = '+';
-                issue.opr[2] = k;
-                issue.result = issue.opr[0] * issue.opr[1] + issue.opr[2];
+                issue.opr[2] = i;
+                issue.result = m;
                 break;
             case 'mulsub_1_1_2':
                 i = rand(4, 9);

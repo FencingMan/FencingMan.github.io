@@ -32,6 +32,7 @@ var modes = [
     ["4", "两位数-（两位数相减）", 0],
     ["5", "一位数×（一位数相加）", 0],
     ["6", "有余数的表内除法", 0],
+    ["7", "两位数加表内除法", 0],
 ];
 
 layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function () {
@@ -518,6 +519,23 @@ function generate_issue(type) {
                 issue.op[0] = '÷'
                 issue.opr[1] = j
                 issue.result = i + '...' + l
+                break;
+            // 两位数加表内除法
+            case "7":
+                do {
+                    i = rand(1, 9);
+                    j = rand(1, 9);
+                    k = j * i;
+                    l = rand(11, 99);
+                    m = i + l;
+                } while (m > 99);
+                issue.op_n = 2;
+                issue.opr[0] = l
+                issue.op[0] = '+'
+                issue.opr[1] = k
+                issue.op[1] = '÷'
+                issue.opr[2] = j
+                issue.result = m
                 break;
 
 

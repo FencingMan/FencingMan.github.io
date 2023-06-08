@@ -1,5 +1,4 @@
 let startDate = new Date();
-
 var modes = [
     ["addc_2_2", "两位数进位加法", 0],
     ["add_2_2", "两位数不进位加", 0],

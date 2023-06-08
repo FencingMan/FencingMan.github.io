@@ -33,6 +33,12 @@ var modes = [
     ["5", "一位数×（一位数相加）", 0],
     ["6", "有余数的表内除法", 0],
     ["7", "两位数加表内除法", 0],
+    ["8", "千➕百", 0],
+    ["9", "千百➕百", 0],
+    ["10", "百十➕十", 0],
+    ["11", "千➖千", 0],
+    ["12", "千百➖百", 0],
+    ["13", "千百➖十", 0],
 ];
 
 layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function () {
@@ -191,7 +197,7 @@ function generate_issue(type) {
                     k = rand(1, 9);
                     l = j * k;
                     m = l + i
-                }while (m > 99)
+                } while (m > 99)
                 issue.op_n = 2;
                 issue.opr[0] = i;
                 issue.op[0] = '+';
@@ -231,7 +237,7 @@ function generate_issue(type) {
                     k = rand(1, 9);
                     l = j * k;
                     m = l + i
-                }while (m > 99)
+                } while (m > 99)
                 issue.op_n = 2;
                 issue.opr[0] = j;
                 issue.op[0] = '×';
@@ -512,7 +518,7 @@ function generate_issue(type) {
                     i = rand(1, 9);
                     j = rand(1, 9);
                     k = j * i;
-                    l = rand(1, j-1);
+                    l = rand(1, j - 1);
                     m = k + l;
                 } while (l < 1);
                 issue.opr[0] = m
@@ -536,6 +542,80 @@ function generate_issue(type) {
                 issue.op[1] = '÷'
                 issue.opr[2] = j
                 issue.result = m
+                break;
+            // 千➕百
+            case "8":
+                i = rand(1, 9) * 1000;
+                j = rand(1, 9) * 100;
+                k = j + i;
+                issue.opr[0] = i
+                issue.op[0] = '+'
+                issue.opr[1] = j
+                issue.result = k
+                break;
+            // 千百➕百
+            case "9":
+                do {
+                    i = rand(11, 99);
+                    j = rand(1, 9) * 100;
+                    k = i * 100;
+                    l = k + j;
+                } while (i % 10 == 0 || l > 10000);
+                issue.opr[0] = k
+                issue.op[0] = '+'
+                issue.opr[1] = j
+                issue.result = l
+                break;
+            // 百十➕十
+            case "10":
+                do {
+                    i = rand(11, 99);
+                    j = rand(1, 9) * 10;
+                    k = 10 * i;
+                    l = k + j;
+                } while (i % 10 == 0);
+                issue.opr[0] = k
+                issue.op[0] = '+'
+                issue.opr[1] = j
+                issue.result = l
+                break;
+            // 千➖千
+            case "11":
+                do {
+                    i = rand(1, 9);
+                    j = rand(1, 9);
+                    k = i - j;
+                } while (k < 0);
+                issue.opr[0] = i*1000
+                issue.op[0] = '-'
+                issue.opr[1] = j*1000
+                issue.result = k*1000
+                break;
+            // 千百➖百
+            case "12":
+                do {
+                    i = rand(11, 99);
+                    j = rand(1, 9) * 100;
+                    k = 100 * i;
+                    l = k - j;
+                } while (i % 10 == 0);
+                issue.opr[0] = k
+                issue.op[0] = '-'
+                issue.opr[1] = j
+                issue.result = l
+                break;
+            // 千百➖十
+            case "13":
+                do {
+                    i = rand(11, 99);
+                    j = rand(1, 9) * 10;
+                    k = 100 * i;
+                    l = k - j;
+                } while (i % 10 == 0);
+                issue.opr[0] = k
+                issue.op[0] = '-'
+                issue.opr[1] = j
+                issue.result = l
                 break;
 
 

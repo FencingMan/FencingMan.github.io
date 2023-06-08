@@ -37,7 +37,7 @@ var modes = [
     ["10", "百十➕十", 0],
     ["11", "千➖千", 0],
     ["12", "千百➖百", 0],
-    ["13", "千百➖十", 0],
+    ["13", "百十➖十", 0],
 ];
 
 layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function () {
@@ -603,12 +603,12 @@ function generate_issue(type) {
                 issue.opr[1] = j
                 issue.result = l
                 break;
-            // 千百➖十
+            // 百十➖十
             case "13":
                 do {
                     i = rand(11, 99);
                     j = rand(1, 9) * 10;
-                    k = 100 * i;
+                    k = 10 * i;
                     l = k - j;
                 } while (i % 10 == 0);
                 issue.opr[0] = k

@@ -32,11 +32,15 @@ var modes = [
     ["5", "一位数×（一位数相加）", 0],
     ["6", "有余数的表内除法", 0],
     ["7", "两位数加表内除法", 0],
-    ["8", "千➕百", 0],
+    ["14", "千百➕千百", 0],
     ["9", "千百➕百", 0],
+    ["8", "千➕百", 0],
+    ["15", "百十➕百十", 0],
     ["10", "百十➕十", 0],
-    ["11", "千➖千", 0],
+    ["16", "千百➖千百", 0],
     ["12", "千百➖百", 0],
+    ["11", "千➖千", 0],
+    ["17", "百十➖百十", 0],
     ["13", "百十➖十", 0],
 ];
 
@@ -567,12 +571,12 @@ function generate_issue(type) {
                 break;
             // 百十➕十
             case "10":
-                do {
-                    i = rand(11, 99);
-                    j = rand(1, 9) * 10;
-                    k = 10 * i;
-                    l = k + j;
-                } while (i % 10 == 0);
+                // do {
+                i = rand(11, 99);
+                j = rand(1, 9) * 10;
+                k = 10 * i;
+                l = k + j;
+                // } while (i % 10 == 0);
                 issue.opr[0] = k
                 issue.op[0] = '+'
                 issue.opr[1] = j
@@ -585,19 +589,19 @@ function generate_issue(type) {
                     j = rand(1, 9);
                     k = i - j;
                 } while (k < 0);
-                issue.opr[0] = i*1000
+                issue.opr[0] = i * 1000
                 issue.op[0] = '-'
-                issue.opr[1] = j*1000
-                issue.result = k*1000
+                issue.opr[1] = j * 1000
+                issue.result = k * 1000
                 break;
             // 千百➖百
             case "12":
-                do {
-                    i = rand(11, 99);
-                    j = rand(1, 9) * 100;
-                    k = 100 * i;
-                    l = k - j;
-                } while (i % 10 == 0);
+                // do {
+                i = rand(11, 99);
+                j = rand(1, 9) * 100;
+                k = 100 * i;
+                l = k - j;
+                // } while (i % 10 == 0);
                 issue.opr[0] = k
                 issue.op[0] = '-'
                 issue.opr[1] = j
@@ -605,18 +609,71 @@ function generate_issue(type) {
                 break;
             // 百十➖十
             case "13":
-                do {
-                    i = rand(11, 99);
-                    j = rand(1, 9) * 10;
-                    k = 10 * i;
-                    l = k - j;
-                } while (i % 10 == 0);
+                // do {
+                i = rand(11, 99);
+                j = rand(1, 9) * 10;
+                k = 10 * i;
+                l = k - j;
+                // } while (i % 10 == 0);
                 issue.opr[0] = k
                 issue.op[0] = '-'
                 issue.opr[1] = j
                 issue.result = l
                 break;
-
+            // 千百➕千百
+            case "14":
+                do {
+                    i = rand(10, 99);
+                    j = rand(10, 99);
+                    l = i + j;
+                } while (l > 100);
+                issue.opr[0] = i * 100
+                issue.op[0] = '+'
+                issue.opr[1] = j * 100
+                issue.result = l * 100
+                break;
+            // 百十➕百十
+            case "15":
+                // do {
+                i = rand(10, 99);
+                j = rand(10, 99);
+                l = i + j;
+                // } while (l > 100);
+                issue.opr[0] = i * 10
+                issue.op[0] = '+'
+                issue.opr[1] = j * 10
+                issue.result = l * 10
+                break;
+            // 千百➖千百
+            case "16":
+                i = rand(10, 99);
+                j = rand(10, 99);
+                if (i < j) {
+                    k = i;
+                    i = j;
+                    j = k;
+                }
+                l = i - j;
+                issue.opr[0] = i * 100
+                issue.op[0] = '-'
+                issue.opr[1] = j * 100
+                issue.result = l * 100
+                break;
+            // 百十➖百十
+            case "17":
+                i = rand(10, 99);
+                j = rand(10, 99);
+                if (i < j) {
+                    k = i;
+                    i = j;
+                    j = k;
+                }
+                l = i - j;
+                issue.opr[0] = i * 10
+                issue.op[0] = '-'
+                issue.opr[1] = j * 10
+                issue.result = l * 10
+                break;
 
             default:
                 alert("unknown type=" + type);

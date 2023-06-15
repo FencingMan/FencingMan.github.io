@@ -6,21 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style media="screen">
-        *{
+        * {
             margin: 0;
             padding: 0;
         }
-        #clock{
-            width:800px;
+
+        #clock {
+            width: 800px;
             height: 800px;
             margin: 0 auto;
         }
     </style>
 </head>
 <body>
-    <div id="clock">
-        <canvas id="canvas" width="800" height="800">您的浏览器不支持canvas，请更换浏览器！</canvas>
-    </div>
-    <script src="scripts/clock.js" charset="utf-8"></script>
+<div id="clock">
+    <canvas id="canvas" width="800" height="800">您的浏览器不支持canvas，请更换浏览器！</canvas>
+</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button id="generate" onclick="fresh()">随机生成</button>&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="checkbox" id="hiddenHour"/>是否隐藏时针&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="checkbox" id="is5" checked/>分钟一定为整5分&nbsp;&nbsp;&nbsp;&nbsp;
+    <input id="currentTime"/>
+    <button id="generate2" onclick="fresh(true)">生成指定时间</button>
+</div>
+<script src="scripts/clock.js" charset="utf-8"></script>
 </body>
 </html>

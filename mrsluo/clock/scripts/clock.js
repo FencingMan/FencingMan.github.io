@@ -1,25 +1,20 @@
 var canvas = document.querySelector('canvas');
 var ctx = canvas.getContext('2d');
-var nowDate = new Date();
-var second = nowDate.getSeconds();
-var minute = nowDate.getMinutes();
-var hour = nowDate.getHours();
-draw()
+var hour = Math.round(Math.random() * 23)
+var minute = Math.round(Math.random() * 12) * 5;
+var second = 0;
+minute = minute == 60 ? 0 : minute;
 
-function draw() {
-	var hourNum = Math.round(Math.random()*12 + 1)
-	var minuteNum = Math.round(Math.random()*12 + 1)*5;
-	if(minuteNum == 60){
-		minuteNum =0;
-	}
-    nowDate = new Date(2022,05,14,hourNum,minuteNum,00);
-    second = nowDate.getSeconds();
-    minute = nowDate.getMinutes();
-    hour = nowDate.getHours();
+drawDial();
+
+/**
+ * 画钟盘
+ */
+function drawDial() {
     ctx.clearRect(0, 0, 800, 800);
     ctx.beginPath();
-	
-        ctx.arc(400, 400, 370, 0, 360 * Math.PI / 180);
+
+    ctx.arc(400, 400, 370, 0, 360 * Math.PI / 180);
     ctx.lineCap = "round";
     for (var i = 0; i < 60; i++) {
         if ((i + 5) % 5 === 0) {
@@ -61,19 +56,22 @@ function draw() {
     ctx.font = "18px Arial";
     ctx.closePath();
 
-    ctx.beginPath();
-    ctx.moveTo(Math.cos((hour * 30 + minute / 2 - 90) / 180 * Math.PI) * 180 + 400, Math.sin((hour * 30 + minute / 2 - 90) / 180 * Math.PI) * 180 + 400);
-    ctx.lineTo(400, 400);
-    ctx.save();
-    ctx.lineCap = "round";
-    ctx.closePath();
-    ctx.shadowOffsetX = -5;
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = "#000";
-    ctx.lineWidth = 24;
-    ctx.strokeStyle = '#222';
-    ctx.stroke();
-    ctx.restore();
+
+    if (!document.getElementById("hiddenHour").checked) {
+        ctx.beginPath();
+        ctx.moveTo(Math.cos((hour * 30 + minute / 2 - 90) / 180 * Math.PI) * 180 + 400, Math.sin((hour * 30 + minute / 2 - 90) / 180 * Math.PI) * 180 + 400);
+        ctx.lineTo(400, 400);
+        ctx.save();
+        ctx.lineCap = "round";
+        ctx.closePath();
+        ctx.shadowOffsetX = -5;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "#000";
+        ctx.lineWidth = 24;
+        ctx.strokeStyle = '#222';
+        ctx.stroke();
+        ctx.restore();
+    }
 
     ctx.beginPath();
     ctx.moveTo(Math.cos((minute * 6 + second * 0.1 - 90) / 180 * Math.PI) * 250 + 400, Math.sin((minute * 6 + second * 0.1 - 90) / 180 * Math.PI) * 250 + 400);
@@ -89,7 +87,6 @@ function draw() {
     ctx.restore();
 
 
-
     ctx.save();
     ctx.arc(400, 400, 20, 0, Math.PI * 2);
     ctx.shadowOffsetX = -5;
@@ -98,5 +95,44 @@ function draw() {
     ctx.fillStyle = 'rgb(213, 153, 0)';
     ctx.fill();
     ctx.restore();
+
+    document.getElementById("currentTime").value = (hour < 10 ? "0" + hour : hour) + ":" + (minute < 10 ? "0" + minute : minute);
 }
 
+/**
+ * 重新生成
+ * @param isZhiDing 是否指定时间
+ */
+function fresh(isZhiDing) {
+
+    if (isZhiDing) {
+        const currentTime = document.getElementById("currentTime").value;
+        if (currentTime == null || currentTime == "") {
+            alert("请输入时间");
+            return;
+        }
+        //根据：或者:分割时间
+        const time = currentTime.split(":");
+        if (time.length != 2) {
+            alert("时间输入有误，需要英文冒号哦");
+            return;
+        }
+        hour = parseInt(time[0]);
+        minute = parseInt(time[1]);
+        if (hour > 23 || hour < 0 || minute > 59 || minute < 0) {
+            alert("时间输入有误");
+            return;
+        }
+
+    } else {
+        hour = Math.round(Math.random() * 23)
+        if (document.getElementById("is5").checked) {
+            minute = Math.round(Math.random() * 12) * 5;
+        } else {
+            minute = Math.round(Math.random() * 60);
+        }
+        minute = minute == 60 ? 0 : minute;
+    }
+
+    drawDial();
+}

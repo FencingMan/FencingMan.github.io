@@ -42,6 +42,13 @@ var modes = [
     ["11", "千➖千", 0],
     ["17", "百十➖百十", 0],
     ["13", "百十➖十", 0],
+    ["18", "两位数➕两位数（估算）", 0],
+    ["19", "三位数➕三位数", 0],
+    ["20", "三位数➖三位数", 0],
+    ["21", "三位数➕两位数", 0],
+    ["22", "三位数➖两位数", 0],
+    ["23", "两位数✖️一位数", 0],
+    ["24", "三位数✖️一位数", 0]
 ];
 
 layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function () {
@@ -634,11 +641,11 @@ function generate_issue(type) {
                 break;
             // 百十➕百十
             case "15":
-                // do {
-                i = rand(10, 99);
-                j = rand(10, 99);
-                l = i + j;
-                // } while (l > 100);
+                do {
+                    i = rand(10, 99);
+                    j = rand(10, 99);
+                    l = i + j;
+                } while (l >= 100 || i % 10 == 0 || j % 10 == 0);
                 issue.opr[0] = i * 10
                 issue.op[0] = '+'
                 issue.opr[1] = j * 10
@@ -673,6 +680,82 @@ function generate_issue(type) {
                 issue.op[0] = '-'
                 issue.opr[1] = j * 10
                 issue.result = l * 10
+                break;
+            // 两位数➕两位数（估算）
+            case "18":
+                i = rand(10, 99);
+                j = rand(10, 99);
+                l = Math.round((i + j) / 10) * 10;
+                issue.opr[0] = i
+                issue.op[0] = '+'
+                issue.opr[1] = j + '≈'
+                issue.result = l
+                break;
+            // 三位数➕三位数
+            case "19":
+                do {
+                    i = rand(100, 999);
+                    j = rand(100, 999);
+                    l = i + j;
+                } while (l > 999)
+                issue.opr[0] = i
+                issue.op[0] = '+'
+                issue.opr[1] = j
+                issue.result = l
+                break;
+            // 三位数➖三位数
+            case "20":
+                do {
+                    i = rand(100, 999);
+                    j = rand(100, 999);
+                    l = i - j;
+                } while (l < 1)
+                issue.opr[0] = i
+                issue.op[0] = '-'
+                issue.opr[1] = j
+                issue.result = l
+                break;
+            // 三位数➕两位数
+            case "21":
+                do {
+                    i = rand(100, 999);
+                    j = rand(10, 99);
+                    l = i + j;
+                } while (l > 999)
+                issue.opr[0] = i
+                issue.op[0] = '+'
+                issue.opr[1] = j
+                issue.result = l
+                break;
+            // 三位数➖两位数
+            case "22":
+                i = rand(100, 999);
+                j = rand(10, 99);
+                l = i - j;
+                issue.opr[0] = i
+                issue.op[0] = '-'
+                issue.opr[1] = j
+                issue.result = l
+                break;
+            // 两位数✖️一位数
+            case "23":
+                i = rand(10, 99);
+                j = rand(1, 9);
+                l = i * j;
+                issue.opr[0] = i
+                issue.op[0] = '×'
+                issue.opr[1] = j
+                issue.result = l
+                break;
+            // 三位数✖️一位数
+            case "24":
+                i = rand(100, 999);
+                j = rand(1, 9);
+                l = i * j;
+                issue.opr[0] = i
+                issue.op[0] = '×'
+                issue.opr[1] = j
+                issue.result = l
                 break;
 
             default:

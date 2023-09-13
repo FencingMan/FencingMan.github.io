@@ -95,7 +95,7 @@
 <form class="layui-form">
     <div class="layui-form-item">
         <label class="layui-form-label">份数：</label>
-        <div class="layui-input-inline" style="width: 50px">
+        <div class="layui-input-inline" style="width: 60px">
             <select id="pages" lay-verify="required">
             </select>
         </div>
@@ -414,7 +414,7 @@
     {{#  layui.each(d, function(index, item){ }}
     <div class="layui-inline">
         <label class="layui-form-label" style="width:120px">{{ item[1] }}</label>
-        <div class="layui-input-inline" style="width:50px">
+        <div class="layui-input-inline" style="width:60px">
             <select name="{{ item[0] }}" lay-verify="required">
                 <option value="0" {{# if(item[2]=== 0){ }} selected {{# } }}>0</option>
                 <option value="1" {{# if(item[2]=== 1){ }} selected {{# } }}>1</option>

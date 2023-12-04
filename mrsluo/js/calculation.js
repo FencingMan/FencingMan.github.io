@@ -48,7 +48,15 @@ var modes = [
     ["21", "三位数➕两位数", 0],
     ["22", "三位数➖两位数", 0],
     ["23", "两位数✖️一位数", 0],
-    ["24", "三位数✖️一位数", 0]
+    ["24", "三位数✖️一位数", 0],
+    ["25", "三➕三➕三", 0],
+    ["26", "三➖三➕三", 0],
+    ["27", "三➕三➖三", 0],
+    ["28", "三➕三✖️一", 0],
+    ["29", "(三➖三)✖️一", 0],
+    ["30", "(三➖三)➗️一[表内无余]", 0],
+    ["31", "一✖️三", 0],
+    ["32", "一✖️三➖三", 0]
 ];
 
 layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function () {
@@ -756,6 +764,112 @@ function generate_issue(type) {
                 issue.op[0] = '×'
                 issue.opr[1] = j
                 issue.result = l
+                break;
+            // 三➕三➕三
+            case "25":
+                issue.op_n = 2;
+                issue.opr[0] = rand(100, 999);
+                issue.op[0] = '+'
+                issue.opr[1] = rand(100, 999);
+                issue.op[1] = '+'
+                issue.opr[2] = rand(100, 999);
+                issue.result = issue.opr[0] + issue.opr[1] + issue.opr[2]
+                break;
+            // 三➖三➕三
+            case "26":
+                i = rand(100, 999);
+                j = rand(100, 999);
+                if (i < j) {
+                    k = i;
+                    i = j;
+                    j = k;
+                }
+                issue.op_n = 2;
+                issue.opr[0] = i
+                issue.op[0] = '-'
+                issue.opr[1] = j
+                issue.op[1] = '+'
+                issue.opr[2] = rand(100, 999);
+                issue.result = issue.opr[0] - issue.opr[1] + issue.opr[2]
+                break;
+            // 三➕三➖三
+            case "27":
+                do {
+                    issue.op_n = 2;
+                    issue.opr[0] = rand(100, 999);
+                    issue.op[0] = '+'
+                    issue.opr[1] = rand(100, 999);
+                    issue.op[1] = '-'
+                    issue.opr[2] = rand(100, 999);
+                    issue.result = issue.opr[0] + issue.opr[1] - issue.opr[2]
+                } while (issue.result < 0)
+                break;
+            // 三➕三✖️一
+            case "28":
+                issue.op_n = 2;
+                issue.opr[0] = rand(100, 999);
+                issue.op[0] = '+'
+                issue.opr[1] = rand(100, 999);
+                issue.op[1] = '×'
+                issue.opr[2] = rand(1, 9);
+                issue.result = issue.opr[0] + issue.opr[1] * issue.opr[2]
+                break;
+            // (三➖三)✖️一
+            case "29":
+                i = rand(100, 999);
+                j = rand(100, 999);
+                if (i < j) {
+                    k = i;
+                    i = j;
+                    j = k;
+                }
+                issue.op_n = 2;
+                issue.opr[0] = '(' + i
+                issue.op[0] = '-'
+                issue.opr[1] = j + ')'
+                issue.op[1] = '×'
+                issue.opr[2] = rand(1, 9);
+                issue.result = (i - j) * issue.opr[2]
+                break;
+            // (三➖三)➗️一[表内无余]
+            case "30":
+                issue.op_n = 2;
+                i = rand(1, 9);
+                j = rand(1, 9);
+                k = i * j;
+                l = rand(100, 918);
+                m = l + k;
+                issue.opr[0] = '(' + m
+                issue.op[0] = '-'
+                issue.opr[1] = l + ')'
+                issue.op[1] = '÷'
+                issue.opr[2] = j;
+                issue.result = i;
+                break;
+            // 一✖️三
+            case "31":
+                i = rand(100, 999);
+                j = rand(1, 9);
+                l = i * j;
+                issue.opr[0] = j
+                issue.op[0] = '×'
+                issue.opr[1] = i
+                issue.result = l
+                break;
+            // 一✖️三➖三
+            case "32":
+                do {
+                    i = rand(100, 999);
+                    j = rand(1, 9);
+                    l = i * j;
+                    issue.op_n = 2;
+                    issue.opr[0] = j
+                    issue.op[0] = '×'
+                    issue.opr[1] = i
+                    issue.op[1] = '-'
+                    issue.opr[2] = rand(100, 999);
+                    issue.result = l - issue.opr[2]
+                } while (issue.result < 0)
                 break;
 
             default:

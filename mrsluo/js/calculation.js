@@ -58,7 +58,14 @@ var modes = [
     ["33", "三✖️一[中间为0]", 0],
     ["31", "一✖️三", 0],
     ["32", "一✖️三➖三", 0],
-    ["34", "……", 0]
+    ["34", "整十➗一", 0],
+    ["35", "整百➗一", 0],
+    ["36", "整千➗一", 0],
+    ["37", "百十➗一", 0],
+    ["38", "两➗一", 0],
+    // ["39", "两➗一 有余数", 0],
+    // ["40", "……", 0],
+    // ["41", "……", 0]
 ];
 
 layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function () {
@@ -882,6 +889,78 @@ function generate_issue(type) {
                 issue.op[0] = '×'
                 issue.opr[1] = j
                 issue.result = l
+                break;
+            // 整十➗一
+            case "34":
+                do {
+                    i = rand(1, 9) * 10;
+                    j = rand(2, 9);
+                    l = i / j;
+                    issue.opr[0] = i
+                    issue.op[0] = '÷'
+                    issue.opr[1] = j
+                    issue.result = l
+                } while (i % j != 0 || l < 10)
+                break;
+            // 整百➗一
+            case "35":
+                do {
+                    i = rand(1, 9) * 100;
+                    j = rand(2, 9);
+                    l = i / j;
+                    issue.opr[0] = i
+                    issue.op[0] = '÷'
+                    issue.opr[1] = j
+                    issue.result = l
+                } while (i % j != 0)
+                break;
+            // 整千➗一
+            case "36":
+                do {
+                    i = rand(1, 9) * 1000;
+                    j = rand(2, 9);
+                    l = i / j;
+                    issue.opr[0] = i
+                    issue.op[0] = '÷'
+                    issue.opr[1] = j
+                    issue.result = l
+                } while (i % j != 0)
+                break;
+            // 百十➗一
+            case "37":
+                do {
+                    i = rand(11, 99) * 10;
+                    j = rand(2, 9);
+                    l = i / j;
+                    issue.opr[0] = i
+                    issue.op[0] = '÷'
+                    issue.opr[1] = j
+                    issue.result = l
+                } while (i % 100 == 0 || i % j != 0)
+                break;
+            // 两➗一
+            case "38":
+                do {
+                    i = rand(11, 99);
+                    j = rand(2, 9);
+                    l = i / j;
+                    issue.opr[0] = i
+                    issue.op[0] = '÷'
+                    issue.opr[1] = j
+                    issue.result = l
+                } while (i % 10 == 0 || i % j != 0 || l < 10)
+                break;
+
+            // 两➗一 有余数
+            case "39":
+                i = rand(11, 99);
+                j = rand(2, 9);
+                l = i / j;
+                issue.opr[0] = i
+                issue.op[0] = '÷'
+                issue.opr[1] = j
+                issue.result = l
+
                 break;
 
             default:

@@ -58,13 +58,14 @@ var modes = [
     ["33", "三✖️一[中间为0]", 0],
     ["31", "一✖️三", 0],
     ["32", "一✖️三➖三", 0],
+    ["38", "两➗一（各位可被整除）", 0],
+    ["41", "两➗一（各位不可被整除）", 0],
     ["34", "整十➗一", 0],
     ["35", "整百➗一", 0],
     ["36", "整千➗一", 0],
     ["37", "百十➗一", 0],
-    ["38", "两➗一", 0],
-    // ["39", "两➗一 有余数", 0],
-    // ["40", "……", 0],
+    ["39", "两➗一 有余数", 0],
+    // ["40", "三➗一 有余数", 0],
     // ["41", "……", 0]
 ];
 
@@ -131,6 +132,35 @@ layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function () {
 
 
 });
+
+/**
+ * 根据入参num获取乘积结果为单个数字的另一个乘数
+ * @param num 已知的乘数
+ * @param isZero 结果是否可以为0
+ * @returns {number} 乘积结果为单个数字的另一个乘数
+ */
+function getSingleNumProduct(num, isZero) {
+    let randNumStart;
+    if (isZero) {
+        randNumStart = 0;
+    } else {
+        randNumStart = 1;
+    }
+    if (num >= 5) {
+        return rand(randNumStart, 1);
+    } else {
+        switch (num) {
+            case 1:
+                return rand(randNumStart, 9);
+            case 2:
+                return rand(randNumStart, 4);
+            case 3:
+                return rand(randNumStart, 3);
+            case 4:
+                return rand(randNumStart, 2);
+        }
+    }
+}
 
 /* randomly generate one issue of give type */
 function generate_issue(type) {
@@ -938,24 +968,82 @@ function generate_issue(type) {
                     issue.result = l
                 } while (i % 100 == 0 || i % j != 0)
                 break;
-            // 两➗一
+            // 两➗一 （各位可被整除）
             case "38":
+                i = rand(1, 9);//除数
+                j = getSingleNumProduct(i, true);//获取商个位
+                j = getSingleNumProduct(i, false) * 10 + j;//获取商十位（同时生成商）
+                l = j * i;
+                issue.opr[0] = l
+                issue.op[0] = '÷'
+                issue.opr[1] = i
+                issue.result = j
+                break;
+            // 两➗一（各位不可被整除）
+            case "41":
                 do {
-                    i = rand(11, 99);
+                    i = rand(21, 99);
                     j = rand(2, 9);
                     l = i / j;
                     issue.opr[0] = i
                     issue.op[0] = '÷'
                     issue.opr[1] = j
                     issue.result = l
-                } while (i % 10 == 0 || i % j != 0 || l < 10)
+                } while (Math.floor(i / 10) % j == 0 || i % j != 0 || l < 10)
                 break;
 
             // 两➗一 有余数
             case "39":
-                i = rand(11, 99);
-                j = rand(2, 9);
-                l = i / j;
+                var temp;
+                do {
+                    i = rand(11, 99);
+                    j = rand(2, 9);
+                    l = Math.floor(i / j);
+                    temp = l;
+                    k = i % j;
+                    if (k != 0) {
+                        l = l + '...' + k;
+                    } else {
+                        k = rand(1, j - 1);
+                        if (i + k > 99) {
+                            i = i - k;
+                            l -= 1;
+                            k = j - k;
+                        } else {
+                            i += k;
+                        }
+                        l = l + '...' + k;
+                    }
+                } while (temp < 10)
+                issue.opr[0] = i
+                issue.op[0] = '÷'
+                issue.opr[1] = j
+                issue.result = l
+
+                break;
+            // 三➗一 有余数
+            case "40":
+                var temp;
+                do {
+                    i = rand(11, 99);
+                    j = rand(2, 9);
+                    l = Math.floor(i / j);
+                    temp = l;
+                    k = i % j;
+                    if (k != 0) {
+                        l = l + '...' + k;
+                    } else {
+                        k = rand(1, j - 1);
+                        if (i + k > 99) {
+                            i = i - k;
+                            l -= 1;
+                            k = j - k;
+                        } else {
+                            i += k;
+                        }
+                        l = l + '...' + k;
+                    }
+                } while (temp < 10)
                 issue.opr[0] = i
                 issue.op[0] = '÷'
                 issue.opr[1] = j

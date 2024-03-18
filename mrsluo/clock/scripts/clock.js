@@ -136,3 +136,40 @@ function fresh(isZhiDing) {
 
     drawDial();
 }
+
+//使钟表前进指定的小时数
+async function goHours() {
+    var hours = document.getElementById("goHours").value;
+    if (hours == null || hours == "") {
+        alert("请输入小时数");
+        return;
+    }
+    let nums = 60 * hours;
+    for (let i = 0; i < nums; i++) {
+        if (++minute == 60) {
+            minute = 0;
+            if (++hour == 24) {
+                hour = 0;
+            }
+        }
+        await sleep(10);
+        drawDial();
+    }
+}
+
+function sleep(time){
+    return new Promise((resolve) => setTimeout(resolve, time));
+}
+
+
+
+    // function sleep(time){
+    //     var timeStamp = new Date().getTime();
+    //     var endTime = timeStamp + time;
+    //     while(true){
+    //         if (new Date().getTime() > endTime){
+    //             return;
+    //         }
+    //     }
+    // }
+

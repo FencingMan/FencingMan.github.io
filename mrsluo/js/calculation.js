@@ -65,8 +65,12 @@ var modes = [
     ["36", "整千➗一", 0],
     ["37", "百十➗一", 0],
     ["39", "两➗一 有余数", 0],
-    // ["40", "三➗一 有余数", 0],
-    // ["41", "……", 0]
+    ["42", "三➗一 无余数", 0],
+    ["40", "三➗一 有余数", 0],
+    ["43", "三➗一 商中间有0 无余数", 0],
+    ["44", "三➗一 商中间有0 有余数", 0],
+    ["45", "三➗一 商末尾有0 无余数", 0],
+    ["46", "三➗一 商末尾有0 有余数", 0],
 ];
 
 layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function () {
@@ -1023,32 +1027,89 @@ function generate_issue(type) {
                 break;
             // 三➗一 有余数
             case "40":
-                var temp;
+
                 do {
-                    i = rand(11, 99);
+                    i = rand(100, 999);
                     j = rand(2, 9);
                     l = Math.floor(i / j);
-                    temp = l;
                     k = i % j;
-                    if (k != 0) {
-                        l = l + '...' + k;
-                    } else {
-                        k = rand(1, j - 1);
-                        if (i + k > 99) {
-                            i = i - k;
-                            l -= 1;
-                            k = j - k;
-                        } else {
-                            i += k;
-                        }
-                        l = l + '...' + k;
-                    }
-                } while (temp < 10)
-                issue.opr[0] = i
-                issue.op[0] = '÷'
-                issue.opr[1] = j
-                issue.result = l
-
+                    issue.opr[0] = i
+                    issue.op[0] = '÷'
+                    issue.opr[1] = j
+                    issue.result = l + '...' + k
+                } while (k == 0)
+                break;
+            // 三➗一 无余数
+            case "42":
+                do {
+                    i = rand(100, 999);
+                    j = rand(2, 9);
+                    l = i / j;
+                    issue.opr[0] = i
+                    issue.op[0] = '÷'
+                    issue.opr[1] = j
+                    issue.result = l
+                } while (i % j != 0)
+                break;
+            //三➗一 商中间有0 无余数
+            case "43":
+                do {
+                    a = rand(1, 9);
+                    b = rand(1, 9);
+                    l = a * 100 + b;
+                    j = rand(2, 9);
+                    i = j * l;
+                    issue.opr[0] = i
+                    issue.op[0] = '÷'
+                    issue.opr[1] = j
+                    issue.result = l
+                } while (i > 999)
+                break;
+            //三➗一 商中间有0 有余数
+            case "44":
+                do {
+                    a = rand(1, 9);
+                    b = rand(1, 9);
+                    l = a * 100 + b;
+                    j = rand(2, 9);
+                    i = j * l;
+                    k = rand(1, j - 1);
+                    i = i + k;
+                    issue.opr[0] = i
+                    issue.op[0] = '÷'
+                    issue.opr[1] = j
+                    issue.result = l + '...' + k
+                } while (i > 999)
+                break;
+            //三➗一 商末尾有0 无余数
+            case "45":
+                do {
+                    a = rand(1, 9);
+                    b = rand(0, 9);
+                    l = a * 100 + b * 10;
+                    j = rand(2, 9);
+                    i = j * l;
+                    issue.opr[0] = i
+                    issue.op[0] = '÷'
+                    issue.opr[1] = j
+                    issue.result = l
+                } while (i > 999)
+                break;
+            //三➗一 商末尾有0 有余数
+            case "46":
+                do {
+                    a = rand(1, 9);
+                    b = rand(0, 9);
+                    l = a * 100 + b * 10;
+                    j = rand(2, 9);
+                    i = j * l;
+                    k = rand(1, j - 1);
+                    i = i + k;
+                    issue.opr[0] = i
+                    issue.op[0] = '÷'
+                    issue.opr[1] = j
+                    issue.result = l + '...' + k
+                } while (i > 999)
                 break;
 
             default:

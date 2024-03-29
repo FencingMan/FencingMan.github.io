@@ -71,6 +71,9 @@ var modes = [
     ["44", "三➗一 商中间有0 有余数", 0],
     ["45", "三➗一 商末尾有0 无余数", 0],
     ["46", "三➗一 商末尾有0 有余数", 0],
+    ["47", "两位数✖️两位数", 0],
+    ["48", "两位数✖️几十", 0],
+    ["49", "几百几十✖️一位数（不超过1000）", 0],
 ];
 
 layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function () {
@@ -1110,6 +1113,33 @@ function generate_issue(type) {
                     issue.opr[1] = j
                     issue.result = l + '...' + k
                 } while (i > 999)
+                break;
+            case "47":
+                i = rand(10, 99);
+                j = rand(10, 99);
+                issue.opr[0] = i;
+                issue.op[0] = '×';
+                issue.opr[1] = j;
+                issue.result = i * j;
+                break;
+            case "48":
+                i = rand(10, 99);
+                j = rand(1, 9) * 10;
+                issue.opr[0] = i;
+                issue.op[0] = '×';
+                issue.opr[1] = j;
+                issue.result = i * j;
+                break;
+            case "49":
+                do {
+                    i = rand(11, 99) * 10;
+                    j = rand(1, 9) ;
+                    k = i * j;
+                    issue.opr[0] = i;
+                    issue.op[0] = '×';
+                    issue.opr[1] = j;
+                    issue.result = k;
+                } while (k > 999 || i % 100 === 0);
                 break;
 
             default:

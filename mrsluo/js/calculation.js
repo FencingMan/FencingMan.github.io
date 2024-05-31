@@ -74,6 +74,8 @@ var modes = [
     ["47", "两位数✖️两位数", 0],
     ["48", "两位数✖️几十", 0],
     ["49", "几百几十✖️一位数（不超过1000）", 0],
+    ["50", "一位小数加", 0],
+    ["51", "一位小数减", 0],
 ];
 
 layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function () {
@@ -1140,6 +1142,26 @@ function generate_issue(type) {
                     issue.opr[1] = j;
                     issue.result = k;
                 } while (k > 999 || i % 100 === 0);
+                break;
+            case "50":
+                    i = rand(1, 500);
+                    j = rand(1, 500) ;
+                    k = i + j;
+                    issue.opr[0] = i/10;
+                    issue.op[0] = '+';
+                    issue.opr[1] = j/10;
+                    issue.result = k/10;
+                break;
+            case "51":
+                do {
+                    i = rand(1, 500);
+                    j = rand(1, 500) ;
+                    k = i - j;
+                    issue.opr[0] = i/10;
+                    issue.op[0] = '-';
+                    issue.opr[1] = j/10;
+                    issue.result = k/10;
+                } while (k < 0);
                 break;
 
             default:

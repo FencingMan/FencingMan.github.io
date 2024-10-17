@@ -76,6 +76,10 @@ var modes = [
     ["49", "几百几十✖️一位数（不超过1000）", 0],
     ["50", "一位小数加", 0],
     ["51", "一位小数减", 0],
+    ["52", "三位数✖️两位数", 0],
+    ["53", "三位数➗两位数（无余数）", 0],
+    ["54", "三位数➗两位数（有余数）", 0],
+    ["55", "表内除法✖10或100", 0],
 ];
 
 layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function () {
@@ -1135,7 +1139,7 @@ function generate_issue(type) {
             case "49":
                 do {
                     i = rand(11, 99) * 10;
-                    j = rand(1, 9) ;
+                    j = rand(1, 9);
                     k = i * j;
                     issue.opr[0] = i;
                     issue.op[0] = '×';
@@ -1144,24 +1148,62 @@ function generate_issue(type) {
                 } while (k > 999 || i % 100 === 0);
                 break;
             case "50":
-                    i = rand(1, 500);
-                    j = rand(1, 500) ;
-                    k = i + j;
-                    issue.opr[0] = i/10;
-                    issue.op[0] = '+';
-                    issue.opr[1] = j/10;
-                    issue.result = k/10;
+                i = rand(1, 500);
+                j = rand(1, 500);
+                k = i + j;
+                issue.opr[0] = i / 10;
+                issue.op[0] = '+';
+                issue.opr[1] = j / 10;
+                issue.result = k / 10;
                 break;
-            case "51":
+            case "52":
+                i = rand(100, 999);
+                j = rand(10, 99);
+                k = i * j;
+                issue.opr[0] = i;
+                issue.op[0] = '×';
+                issue.opr[1] = j;
+                issue.result = k;
+                break;
+            case "53":
                 do {
-                    i = rand(1, 500);
-                    j = rand(1, 500) ;
-                    k = i - j;
-                    issue.opr[0] = i/10;
-                    issue.op[0] = '-';
-                    issue.opr[1] = j/10;
-                    issue.result = k/10;
-                } while (k < 0);
+                    i = rand(100, 999);
+                    j = rand(10, 99);
+                    k = Math.floor(i / j);
+                    l = i % j;
+                    issue.opr[0] = i;
+                    issue.op[0] = '÷';
+                    issue.opr[1] = j;
+                    issue.result = k;
+                } while (l !== 0);
+                break;
+            case "54":
+                do {
+                    i = rand(100, 999);
+                    j = rand(10, 99);
+                    k = Math.floor(i / j);
+                    l = i % j;
+                    issue.opr[0] = i;
+                    issue.op[0] = '÷';
+                    issue.opr[1] = j;
+                    issue.result = k + '...' + l;
+                } while (l === 0);
+                break;
+            case "55":
+                i = rand(1, 9);
+                j = rand(1, 9);
+                a = rand(0, 1);
+                b = a === 0 ? 10 : 100;
+                l = i * j * b;
+                if (b === 100) {
+                    a = rand(0, 1);
+                    b = a === 0 ? 10 : 100;
+                }
+                j *= b;
+                issue.opr[0] = l;
+                issue.op[0] = '÷';
+                issue.opr[1] = j;
+                issue.result = l / j;
                 break;
 
             default:

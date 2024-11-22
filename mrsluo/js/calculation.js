@@ -80,6 +80,10 @@ var modes = [
     ["53", "三位数➗两位数（无余数）", 0],
     ["54", "三位数➗两位数（有余数）", 0],
     ["55", "表内除法✖10或100", 0],
+    ["56", "三➗二(整十)无余数", 0],
+    ["57", "三➗二(整十)有余数", 0],
+    ["58", "三➗二(非整十)无余数", 0],
+    ["59", "三➗二(非整十)有余数", 0],
 ];
 
 layui.use(['form', 'layedit', 'laydate', 'element', 'laytpl'], function () {
@@ -1204,6 +1208,55 @@ function generate_issue(type) {
                 issue.op[0] = '÷';
                 issue.opr[1] = j;
                 issue.result = l / j;
+                break;
+                
+    ["56", "三➗二(整十)无余数", 0],
+    ["57", "三➗二(整十)有余数", 0],
+    ["58", "三➗二(非整十)无余数", 0],
+    ["59", "三➗二(非整十)有余数", 0],
+            case "56":
+                do{
+                    i = rand(101, 999);
+                    j = rand(1, 9) * 10;
+                    l = i%j;
+                }while(l != 0);
+                issue.opr[0] = i;
+                issue.op[0] = '÷';
+                issue.opr[1] = j;
+                issue.result = i / j;
+                break;
+            case "57":
+                do{
+                    i = rand(101, 999);
+                    j = rand(1, 9) * 10;
+                    l = i%j;
+                }while(l == 0);
+                issue.opr[0] = i;
+                issue.op[0] = '÷';
+                issue.opr[1] = j;
+                issue.result = i / j + '...' + l;
+                break;
+            case "58":
+                do{
+                    i = rand(101, 999);
+                    j = rand(11, 99);
+                    l = i%j;
+                }while(l != 0 || j%10 === 0);
+                issue.opr[0] = i;
+                issue.op[0] = '÷';
+                issue.opr[1] = j;
+                issue.result = i / j;
+                break;
+            case "59":
+                do{
+                    i = rand(101, 999);
+                    j = rand(11, 99);
+                    l = i%j;
+                }while(l == 0 || j%10 === 0);
+                issue.opr[0] = i;
+                issue.op[0] = '÷';
+                issue.opr[1] = j;
+                issue.result = i / j + '...' + l;
                 break;
 
             default:

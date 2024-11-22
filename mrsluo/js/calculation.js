@@ -1229,7 +1229,7 @@ function generate_issue(type) {
                 issue.opr[0] = i;
                 issue.op[0] = '÷';
                 issue.opr[1] = j;
-                issue.result = i / j + '...' + l;
+                issue.result = Math.floor(i / j) + '...' + l;
                 break;
             case "58":
                 do{
@@ -1251,7 +1251,7 @@ function generate_issue(type) {
                 issue.opr[0] = i;
                 issue.op[0] = '÷';
                 issue.opr[1] = j;
-                issue.result = i / j + '...' + l;
+                issue.result = Math.floor(i / j) + '...' + l;
                 break;
 
             default:
